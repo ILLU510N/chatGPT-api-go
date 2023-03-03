@@ -7,14 +7,20 @@ simple demo for golang chatGPT api server.
 powered by gin. 
 
 ### Install
-```sh
+```shell
 git clone https://github.com/ILLU510N/chatGPT-api-go.git
 go build
 ./chatgpt-api-go
 ```
 
+### Usage
+client use http post to send message to server.
+```shell
+curl -H "Content-Type: application/json" -X POST -d "{\"content\":\"what is chatGPT\"}" "http://localhost:8080"
+```
+
 ### Config
-conf.yaml
+edit conf.yaml
 
 ```yaml
 # example

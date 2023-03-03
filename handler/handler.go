@@ -1,20 +1,17 @@
 package handler
 
 import (
-	"log"
-
 	"chatgpt-api-go/types"
 	"github.com/gin-gonic/gin"
 )
 
 func Ask(c *gin.Context) {
 	// 从json body中读出提问文本
-	var a types.ClientRequest
-	err := c.BindJSON(&a)
+	var req types.ClientRequest
+	err := c.BindJSON(&req)
 	handlerErr(c, err)
-	log.Println(a.Content)
 
-	answer, err := Send2ChatGPT(a.Content)
+	answer, err := Send2ChatGPT(req.Content)
 	handlerErr(c, err)
 
 	// 响应给前端
