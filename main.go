@@ -20,7 +20,7 @@ func main() {
 	if len(conf.Proxy) > 0 {
 		proxy(conf.Proxy)
 	}
-	handler.ApiKey = conf.ApiKey
+	handler.Auth = fmt.Sprintf("Bearer %s", conf.ApiKey)
 
 	// 控制日志输出到文件
 	gin.DisableConsoleColor()

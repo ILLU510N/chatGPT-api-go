@@ -1,3 +1,5 @@
 *.log
 .idea
+.vscode
 /chatgpt-api-go.exe
+/chatgpt-api-go
