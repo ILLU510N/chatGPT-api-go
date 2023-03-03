@@ -1,12 +1,13 @@
 package handler
 
 import (
-	"chatgpt-go/types"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"io"
 	"log"
 	"net/http"
+
+	"chatgpt-api-go/types"
 )
 
 func Ask(c *gin.Context) {

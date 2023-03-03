@@ -2,10 +2,11 @@ package handler
 
 import (
 	"bytes"
-	"chatgpt-go/types"
 	"encoding/json"
 	"fmt"
 	"net/http"
+
+	"chatgpt-api-go/types"
 )
 
 var (

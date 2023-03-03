@@ -1,8 +1,6 @@
 package main
 
 import (
-	"chatgpt-go/handler"
-	"chatgpt-go/types"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"gopkg.in/yaml.v3"
@@ -11,6 +9,9 @@ import (
 	"net/url"
 	"os"
 	"time"
+
+	"chatgpt-api-go/handler"
+	"chatgpt-api-go/types"
 )
 
 func main() {
