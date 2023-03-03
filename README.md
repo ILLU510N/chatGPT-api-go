@@ -1,5 +1,9 @@
 # chatGPT api for golang
 
+simple demo for golang chatGPT api server.
+
+---
+
 powered by gin. 
 
 ### install
@@ -12,7 +16,8 @@ go build
 conf.yaml
 
 ```yaml
+# example
 port: 8080
-proxy: host:port
+proxy: http://127.0.0.1:1234
 api_key: yourkey
 ```

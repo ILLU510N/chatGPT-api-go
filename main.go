@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"gopkg.in/yaml.v3"
 	"io"
 	"net/http"
 	"net/url"
@@ -12,28 +10,27 @@ import (
 
 	"chatgpt-api-go/handler"
 	"chatgpt-api-go/types"
+	"github.com/gin-gonic/gin"
+	"gopkg.in/yaml.v3"
 )
 
 func main() {
 	conf := parseConf()
-	proxy(conf.Proxy)
+	// 可选择配置网络代理
+	if len(conf.Proxy) > 0 {
+		proxy(conf.Proxy)
+	}
 	handler.ApiKey = conf.ApiKey
+
+	// 控制日志输出到文件
+	gin.DisableConsoleColor()
+	f, _ := os.OpenFile("./app.log", os.O_CREATE|os.O_APPEND|os.O_RDWR, 0644)
+	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
 
 	r := gin.Default()
 	r.POST("/", handler.Ask)
 	r.POST("/clear", handler.Clear)
-
-	_, err := os.Stat("log")
-	if err != nil {
-		return
-	}
-	var f *os.File
-	if os.IsNotExist(err) {
-		f, _ = os.Create("log")
-	} else {
-		f, _ = os.Open("log")
-	}
-	gin.DefaultWriter = io.MultiWriter(f)
+	r.POST("/ping", handler.Ping)
 
 	_ = r.Run(fmt.Sprintf(":%d", conf.Port))
 }

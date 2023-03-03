@@ -2,12 +2,12 @@ package handler
 
 import (
 	"encoding/json"
-	"github.com/gin-gonic/gin"
 	"io"
 	"log"
 	"net/http"
 
 	"chatgpt-api-go/types"
+	"github.com/gin-gonic/gin"
 )
 
 func Ask(c *gin.Context) {
@@ -17,7 +17,8 @@ func Ask(c *gin.Context) {
 	handlerErr(c, err)
 	log.Println(a.Content)
 
-	chatReq := GetChatReq(a.Content)
+	chatReq, err := GetChatReq(a.Content)
+	handlerErr(c, err)
 
 	// 使用默认的HTTP客户端发送请求
 	resp, err := http.DefaultClient.Do(chatReq)
@@ -37,18 +38,18 @@ func Ask(c *gin.Context) {
 
 	// 响应给前端
 	answer := apiResp.Choices[0].Message.Content
-	cliResp := types.ClientResponse{
-		Question: a.Content,
-		Answer:   answer,
-	}
 	add2Messages(answer, false)
-	c.PureJSON(200, &cliResp)
+	c.String(200, answer)
 }
 
 func Clear(c *gin.Context) {
 	// 清空对话上下文
 	clearMessages()
 	c.PureJSON(200, "clear chat success")
+}
+
+func Ping(c *gin.Context) {
+	c.String(200, "Pong!")
 }
 
 func handlerErr(c *gin.Context, err error) {

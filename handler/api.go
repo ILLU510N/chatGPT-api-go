@@ -3,7 +3,6 @@ package handler
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"chatgpt-api-go/types"
@@ -14,7 +13,7 @@ var (
 	ApiKey string
 )
 
-func GetChatReq(content string) *http.Request {
+func GetChatReq(content string) (*http.Request, error) {
 	add2Messages(content, true)
 
 	apiReq := types.ApiRequest{
@@ -24,21 +23,17 @@ func GetChatReq(content string) *http.Request {
 
 	b, err := json.Marshal(apiReq)
 	if err != nil {
-		fmt.Println("json marshal err ", err)
-		return nil
+		return nil, err
 	}
-	fmt.Println(string(b))
 
 	req, err := http.NewRequest("POST", "https://api.openai.com/v1/chat/completions", bytes.NewBuffer(b))
 	if err != nil {
-		fmt.Println("post openai err ", err)
-		return nil
+		return nil, err
 	}
-
 	req.Header.Set("Authorization", "Bearer "+ApiKey)
 	req.Header.Set("Content-Type", "application/json")
 
-	return req
+	return req, nil
 }
 
 // 添加对话到对话上下文
