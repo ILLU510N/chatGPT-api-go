@@ -44,15 +44,17 @@ func Send2ChatGPT(content string) (string, error) {
 	}
 	defer resp.Body.Close()
 
-	if resp.StatusCode != http.StatusOK {
-		log.Println(err)
-	}
-
 	// 解析到api的响应结构体
 	data, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return "", err
 	}
+
+	if resp.StatusCode != http.StatusOK {
+		log.Println("openai resp :", string(data))
+		return string(data), err
+	}
+
 	var apiResp types.ApiResponse
 	err = json.Unmarshal(data, &apiResp)
 	if err != nil {

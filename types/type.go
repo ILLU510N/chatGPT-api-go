@@ -40,4 +40,10 @@ type ApiResponse struct {
 		FinishReason string  `json:"finish_reason"`
 		Index        int     `json:"index"`
 	} `json:"choices"`
+	Error struct {
+		Message string      `json:"message"`
+		Type    string      `json:"type"`
+		Param   interface{} `json:"param"`
+		Code    string      `json:"code"`
+	} `json:"error"`
 }
