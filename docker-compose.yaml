@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  app:
+    image: chatgpt-api-go:latest
+    container_name: chatgpt-api-go
+    restart: on-failure:3
+    network_mode: host
+    volumes:
+      - ./conf.yaml:/app/conf.yaml
+

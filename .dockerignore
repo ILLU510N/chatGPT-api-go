@@ -1,0 +1,6 @@
+.git
+.github
+*.md
+chatgpt-api-go
+chatgpt-api-go.exe
+*.log
